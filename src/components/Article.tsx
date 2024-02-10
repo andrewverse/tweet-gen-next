@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardContent,
@@ -6,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Dispatch, SetStateAction, useState } from "react";
 
 // export default function Article({ article }: { article: Article }) {
 //   return (
@@ -21,18 +23,47 @@ import {
 //     </div>
 //   );
 // }
-export default function Article({ article }: { article: Article }) {
-  console.log(article);
+export default function Article({
+  article,
+  setSelectedArticles,
+  selectedArticles,
+}: {
+  article: Article;
+  setSelectedArticles: React.Dispatch<React.SetStateAction<Article[]>>;
+  selectedArticles: Article[];
+}) {
+  const [isSelected, setIsSelected] = useState(false);
+  const handleSelectedArticle = () => {
+    const articleIndex = selectedArticles?.findIndex(
+      (selectedArticle) => selectedArticle.publishedAt === article.publishedAt
+    );
+
+    setIsSelected(!isSelected);
+
+    if (articleIndex < 0) {
+      setSelectedArticles([...selectedArticles, article]);
+    } else {
+      const newSelectedArticles = [...selectedArticles];
+      newSelectedArticles.splice(articleIndex, 1);
+      setSelectedArticles(newSelectedArticles);
+    }
+  };
+
   return (
-    <Card className='max-w-xl border-gray-600 mx-auto my-5 bg-neutral-950 text-white'>
+    <Card
+      className={`max-w-xl mx-auto my-8 hover:bg-gray-200 ${
+        isSelected && "bg-gray-200"
+      } cursor-pointer`}
+      onClick={handleSelectedArticle}
+    >
       <CardHeader>
-        <CardTitle className='text-white'>{article.title}</CardTitle>
-        <CardDescription className='text-gray-200'>
+        <CardTitle className=''>{article.title}</CardTitle>
+        <CardDescription className='text-gray-400'>
           {article.source.name}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p className='mt-2 text-white'>{article.content}</p>
+        <p className='mt-2 '>{article.content}</p>
       </CardContent>
     </Card>
   );

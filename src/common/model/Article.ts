@@ -1,10 +1,18 @@
 interface Article {
-  source: object;
-  author: string;
+  source: {
+    id: string | null;
+    name: string;
+  };
+  author: string | null;
   title: string;
   description: string;
   url: string;
-  urlToImage: string;
+  urlToImage: string | null;
   publishedAt: string;
   content: string;
+}
+
+interface NewsFetchResult {
+  articles: Article[];
+  error: string | null;
 }

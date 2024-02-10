@@ -1,3 +1,6 @@
+import React from "react";
+import PromptComp from "@/components/PromptComp";
+
 async function getPrompt(prompt: string) {
   const req = await fetch(
     "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1",
@@ -13,14 +16,15 @@ async function getPrompt(prompt: string) {
   return req.json();
 }
 
-import PromptComp from "@/components/PromptComp";
+const Summary = ({ selectedArticles }: { selectedArticles: Article[] }) => {
+  // const prompt = await getPrompt("Summerize an article about gpt-4");
 
-export default async function Prompt() {
-  const prompt = await getPrompt("Summerize an article about gpt-4");
-  console.log(prompt);
   return (
-    <main>
+    <div>
+      <div className='font-bold mt-4'>2. SELECT THE SUMMARY YOU WANT</div>
       <PromptComp prompt={prompt} />
-    </main>
+    </div>
   );
-}
+};
+
+export default Summary;
