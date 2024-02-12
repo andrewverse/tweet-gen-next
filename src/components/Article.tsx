@@ -29,30 +29,24 @@ export default function Article({
   selectedArticles,
 }: {
   article: Article;
-  setSelectedArticles: React.Dispatch<React.SetStateAction<Article[]>>;
-  selectedArticles: Article[];
+  setSelectedArticles: React.Dispatch<React.SetStateAction<Article | null>>;
+  selectedArticles: Article | null;
 }) {
   const [isSelected, setIsSelected] = useState(false);
+
   const handleSelectedArticle = () => {
-    const articleIndex = selectedArticles?.findIndex(
-      (selectedArticle) => selectedArticle.publishedAt === article.publishedAt
-    );
-
     setIsSelected(!isSelected);
-
-    if (articleIndex < 0) {
-      setSelectedArticles([...selectedArticles, article]);
+    if (isSelected) {
+      setSelectedArticles(null);
     } else {
-      const newSelectedArticles = [...selectedArticles];
-      newSelectedArticles.splice(articleIndex, 1);
-      setSelectedArticles(newSelectedArticles);
+      setSelectedArticles(article);
     }
   };
 
   return (
     <Card
       className={`max-w-xl mx-auto my-8 hover:bg-gray-200 ${
-        isSelected && "bg-gray-200"
+        selectedArticles?.publishedAt === article.publishedAt && "bg-gray-200"
       } cursor-pointer`}
       onClick={handleSelectedArticle}
     >
