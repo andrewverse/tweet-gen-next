@@ -5,8 +5,6 @@ import ArticlesList from "@/components/ArticlesList";
 
 const MainContent = ({ articles }: { articles: Article[] }) => {
   const [selectedArticles, setSelectedArticles] = useState<Article[]>([]);
-  // TODO: FIX SUMMARY COMPONENT
-
   return (
     <div>
       <ArticlesList
@@ -14,7 +12,6 @@ const MainContent = ({ articles }: { articles: Article[] }) => {
         selectedArticles={selectedArticles}
         setSelectedArticles={setSelectedArticles}
       />
-      {/* <Summary selectedArticles={selectedArticles} /> */}
     </div>
   );
 };

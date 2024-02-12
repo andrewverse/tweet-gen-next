@@ -43,6 +43,8 @@ export default function Article({
     }
   };
 
+  console.log(selectedArticles);
+
   return (
     <Card
       className={`max-w-xl mx-auto my-8 hover:bg-gray-200 ${
