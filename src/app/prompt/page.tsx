@@ -17,7 +17,6 @@ import PromptComp from "@/components/PromptComp";
 
 export default async function Prompt() {
   const prompt = await getPrompt("Summerize an article about gpt-4");
-  console.log(prompt);
   return (
     <main>
       <PromptComp prompt={prompt} />

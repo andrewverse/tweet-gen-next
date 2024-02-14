@@ -4,12 +4,12 @@ import Article from "./Article";
 
 export default function ArticlesList({
   articles,
-  selectedArticles,
-  setSelectedArticles,
+  selectedArticle,
+  setSelectedArticle,
 }: {
-  articles: Article[];
-  selectedArticles: Article[];
-  setSelectedArticles: React.Dispatch<React.SetStateAction<Article[]>>;
+  articles: Article;
+  selectedArticle: Article | null;
+  setSelectedArticle: React.Dispatch<React.SetStateAction<Article | null>>;
 }) {
   const [page, setPage] = useState(1);
   const itemsPerPage = 3;
@@ -43,8 +43,8 @@ export default function ArticlesList({
           <Article
             key={article.publishedAt}
             article={article}
-            setSelectedArticles={setSelectedArticles}
-            selectedArticles={selectedArticles}
+            setSelectedArticle={setSelectedArticle}
+            selectedArticle={selectedArticle}
           />
         ))}
       </div>

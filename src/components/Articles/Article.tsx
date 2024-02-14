@@ -25,30 +25,31 @@ import { Dispatch, SetStateAction, useState } from "react";
 // }
 export default function Article({
   article,
-  setSelectedArticles,
-  selectedArticles,
+  setSelectedArticle,
+  selectedArticle,
 }: {
   article: Article;
-  setSelectedArticles: React.Dispatch<React.SetStateAction<Article | null>>;
-  selectedArticles: Article | null;
+  setSelectedArticle: React.Dispatch<React.SetStateAction<Article | null>>;
+  selectedArticle: Article | null;
 }) {
   const [isSelected, setIsSelected] = useState(false);
 
+  const isArticleSelected =
+    selectedArticle?.publishedAt === article.publishedAt;
+
   const handleSelectedArticle = () => {
     setIsSelected(!isSelected);
-    if (isSelected) {
-      setSelectedArticles(null);
+    if (isArticleSelected) {
+      setSelectedArticle(null);
     } else {
-      setSelectedArticles(article);
+      setSelectedArticle(article);
     }
   };
-
-  console.log(selectedArticles);
 
   return (
     <Card
       className={`max-w-xl mx-auto my-8 hover:bg-gray-200 ${
-        selectedArticles?.publishedAt === article.publishedAt && "bg-gray-200"
+        isArticleSelected && "bg-gray-200"
       } cursor-pointer`}
       onClick={handleSelectedArticle}
     >

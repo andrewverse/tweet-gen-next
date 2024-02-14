@@ -1,20 +1,5 @@
+"use client";
 import React, { useEffect, useState } from "react";
-import PromptComp from "@/components/PromptComp";
-
-async function getPrompt(prompt: string) {
-  const req = await fetch(
-    "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1",
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.HUGGING_FACE_API_KEY}`,
-      },
-      body: JSON.stringify(prompt),
-    }
-  );
-  console.log(req);
-  return req.json();
-}
 
 const sampleArticle = `If you needed more evidence that GenAI is prone to making stuff up, Google’s Gemini chatbot, formerly Bard, thinks that the 2024 Super Bowl already happened. It even has the (fictional) statistics to back it up.
 
@@ -49,36 +34,23 @@ Google and Microsoft, like most GenAI vendors, readily acknowledge that their Ge
 
 Super Bowl disinformation certainly isn’t the most harmful example of GenAI going off the rails. That distinction probably lies with endorsing torture, reinforcing ethnic and racial stereotypes or writing convincingly about conspiracy theories. It is, however, a useful reminder to double-check statements from GenAI bots. There’s a decent chance they’re not true.`;
 
-const sampleProfile =
-  "A 25 year old software engineer who is interested in AI and machine learning.";
+const Summary = ({ summary }: { summary: string }) => {
+  // const promptSample = `Read the following article: ${sampleArticle} Make a bullet point list of the key ideas from the article that are relevant to this type of person: ${sampleProfile}`;
 
-const Summary = async ({
-  selectedArticles,
-}: {
-  selectedArticles: Article[];
-}) => {
-  const promptSample = `Read the following article: ${sampleArticle} Make a bullet point list of the key ideas from the article that are relevant to this type of person: ${sampleProfile}`;
+  const summariesSplit = summary
+    ?.split(/\n(?=\d\. )/)
+    ?.map((item) => item.trim());
 
-  const response = await getPrompt(promptSample);
-
-  // const [prompt, setPrompt] = useState<string>("");
-
-  // useEffect(() => {
-  //   const fetchPrompt = async () => {
-  //     const promptSample = `Read the following article: ${sampleArticle} Make a bullet point list of the key ideas from the article that are relevant to this type of person: ${sampleProfile}`;
-  //     const response = await getPrompt(promptSample);
-  //     setPrompt(response);
-  //   };
-
-  //   fetchPrompt();
-  // }, []);
-
-  // console.log(prompt);
+  console.log(summariesSplit);
 
   return (
     <div>
-      <div className='font-bold mt-4'>2. SELECT THE SUMMARY YOU WANT</div>
-      <PromptComp prompt={prompt} />
+      <div className='font-bold mt-40 mb-4'>2. SELECT THE SUMMARY YOU WANT</div>
+      {summariesSplit?.map((sum, index) => (
+        <div key={index} className='border-b border-gray-300 pb-5'>
+          {sum}
+        </div>
+      ))}
     </div>
   );
 };
