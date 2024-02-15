@@ -2,6 +2,7 @@ import React from "react";
 import MainContent from "@/components/MainContent";
 import Summary from "@/components/Summary";
 import Header from "@/components/Header/Header";
+import ClientWrapper from "@/components/ClientWrapper";
 
 const apiKey = process.env.NEWS_API_KEY;
 
@@ -39,8 +40,10 @@ const Home: React.FC = async () => {
 
   return (
     <main className=''>
-      <Header />
-      <MainContent articles={articles} />
+      <ClientWrapper className='m-2'>
+        <Header />
+        <MainContent articles={articles} />
+      </ClientWrapper>
     </main>
   );
 };

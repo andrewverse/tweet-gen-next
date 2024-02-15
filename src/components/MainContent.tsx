@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Summary from "@/components/Summary";
 import { Button } from "@/components/ui/button";
 import ArticlesList from "./Articles/ArticlesList";
+import { useMutation } from "@tanstack/react-query";
+import { FaSpinner } from "react-icons/fa";
 
 const sampleProfile =
   "A 25 year old software engineer who is interested in AI and machine learning.";
@@ -19,30 +21,50 @@ async function getPrompt(article: string, profile: string) {
 }
 
 const MainContent = ({ articles }: { articles: Article }) => {
-  const [summary, setSummary] = useState<string>("");
-
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   console.log(selectedArticle);
 
-  const handleSubmitArticle = () => {
-    const fetchPrompt = async () => {
-      const response = await getPrompt(selectedArticle.content, sampleProfile);
-      setSummary(response.tweetDrafts);
-    };
+  const fetchPrompt = async () => {
+    const response = await getPrompt(selectedArticle.content, sampleProfile);
+    return response.tweetDrafts;
+  };
 
-    fetchPrompt();
+  const {
+    data: summary,
+    error,
+    isPending,
+    mutate,
+  } = useMutation({
+    mutationFn: () => fetchPrompt(),
+    onSuccess: () => {},
+  });
+
+  const handleSubmitArticle = () => {
+    // Use the mutate function from useMutation to start the mutation
+    mutate();
   };
   return (
-    <div>
+    <div className='flex flex-col gap-14'>
       <ArticlesList
         articles={articles}
         selectedArticle={selectedArticle}
         setSelectedArticle={setSelectedArticle}
       />
-      <Button onClick={handleSubmitArticle} variant='outline'>
-        Button
+      <Button
+        onClick={handleSubmitArticle}
+        variant='outline'
+        className='w-full bg-sky-300'
+      >
+        Summerize This Article
       </Button>
-      <Summary summary={summary} />
+      {isPending ? (
+        <div className='flex items-center justify-center text-2xl'>
+          <FaSpinner className='animate-spin mr-2' />
+          <span>Loading...</span>
+        </div>
+      ) : (
+        <Summary summary={summary} />
+      )}
     </div>
   );
 };

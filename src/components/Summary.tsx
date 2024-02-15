@@ -45,7 +45,7 @@ const Summary = ({ summary }: { summary: string }) => {
 
   return (
     <div>
-      <div className='font-bold mt-40 mb-4'>2. SELECT THE SUMMARY YOU WANT</div>
+      <div className='font-bold mb-4'>2. SELECT THE SUMMARY YOU WANT</div>
       {summariesSplit?.map((sum, index) => (
         <div key={index} className='border-b border-gray-300 pb-5'>
           {sum}
