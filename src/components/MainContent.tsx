@@ -44,7 +44,7 @@ const MainContent = ({ articles }: { articles: Article }) => {
     mutate();
   };
   return (
-    <div className='flex flex-col gap-14'>
+    <div className='flex flex-col gap-10'>
       <ArticlesList
         articles={articles}
         selectedArticle={selectedArticle}

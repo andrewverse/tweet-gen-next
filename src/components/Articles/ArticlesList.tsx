@@ -34,11 +34,11 @@ export default function ArticlesList({
   };
 
   return (
-    <div>
+    <div className='space-y-5'>
       <div className='font-bold'>
         1. SELECT AN ARTICLE YOU WANT TO SUMMERIZE
       </div>
-      <div className='md:flex gap-4'>
+      <div className='flex gap-4'>
         {currentItems?.map((article: Article) => (
           <Article
             key={article.publishedAt}

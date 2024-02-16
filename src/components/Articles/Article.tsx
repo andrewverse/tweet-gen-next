@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -48,8 +47,8 @@ export default function Article({
 
   return (
     <Card
-      className={`max-w-xl mx-auto my-8 hover:bg-gray-200 ${
-        isArticleSelected && "bg-gray-200"
+      className={`mx-auto my-2 hover:bg-accent ${
+        isArticleSelected && "bg-accent"
       } cursor-pointer`}
       onClick={handleSelectedArticle}
     >

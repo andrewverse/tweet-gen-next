@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const sampleArticle = `If you needed more evidence that GenAI is prone to making stuff up, Google’s Gemini chatbot, formerly Bard, thinks that the 2024 Super Bowl already happened. It even has the (fictional) statistics to back it up.
 
@@ -44,13 +45,17 @@ const Summary = ({ summary }: { summary: string }) => {
   console.log(summariesSplit);
 
   return (
-    <div>
-      <div className='font-bold mb-4'>2. SELECT THE SUMMARY YOU WANT</div>
-      {summariesSplit?.map((sum, index) => (
-        <div key={index} className='border-b border-gray-300 pb-5'>
-          {sum}
-        </div>
-      ))}
+    <div className='space-y-5'>
+      <div className='font-bold'>2. SELECT THE SUMMARY YOU WANT</div>
+      <div className='space-y-4'>
+        {summariesSplit?.map((sum, index) => (
+          <Card key={index} className={`mx-auto`}>
+            <CardContent>
+              <p className='mt-4'>{sum}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 };
