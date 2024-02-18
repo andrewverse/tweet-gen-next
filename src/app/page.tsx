@@ -1,15 +1,17 @@
 import React from "react";
-import MainContent from "@/components/MainContent";
-import Summary from "@/components/Summary";
+
 import Header from "@/components/Header/Header";
+import MainContent from "@/components/MainContent/MainContent";
 import ClientWrapper from "@/components/ClientWrapper";
 
 const apiKey = process.env.NEWS_API_KEY;
 
 async function getNews(): Promise<NewsFetchResult> {
+  const today = new Date().toISOString().split('T')[0];
+  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
   try {
     const res = await fetch(
-      `https://newsapi.org/v2/everything?q=ai&from=2024-02-07&to=2024-02-07&sortBy=popularity&apiKey=${apiKey}`
+      `https://newsapi.org/v2/everything?q=ai&from=${yesterday}&to=${today}&sortBy=popularity&apiKey=${apiKey}`
     );
 
     if (!res.ok) {

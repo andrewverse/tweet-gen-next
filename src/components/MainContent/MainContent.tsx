@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import Summary from "@/components/Summary";
 import { Button } from "@/components/ui/button";
-import ArticlesList from "./Articles/ArticlesList";
+import ArticlesList from "../Articles/ArticlesList";
 import { useMutation } from "@tanstack/react-query";
 import { FaSpinner } from "react-icons/fa";
+import Summary from "@/components/MainContent/Summary";
+import LoadingSpinner from "@/common/components/LoadingSpinner";
 
-const sampleProfile =
-  "A 25 year old software engineer who is interested in AI and machine learning.";
+const sampleProfile ="A 25 year old software engineer who is interested in AI and machine learning."
 
 async function getPrompt(article: string, profile: string) {
   const req = await fetch("http://localhost:8000/process-article", {
@@ -22,26 +22,18 @@ async function getPrompt(article: string, profile: string) {
 
 const MainContent = ({ articles }: { articles: Article }) => {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-  console.log(selectedArticle);
-
   const fetchPrompt = async () => {
     const response = await getPrompt(selectedArticle.content, sampleProfile);
     return response.tweetDrafts;
   };
 
-  const {
-    data: summary,
-    error,
-    isPending,
-    mutate,
-  } = useMutation({
-    mutationFn: () => fetchPrompt(),
+  const summary = useMutation({
+    mutationFn: fetchPrompt,
     onSuccess: () => {},
   });
 
   const handleSubmitArticle = () => {
-    // Use the mutate function from useMutation to start the mutation
-    mutate();
+    summary.mutate();
   };
   return (
     <div className='flex flex-col gap-10'>
@@ -57,13 +49,10 @@ const MainContent = ({ articles }: { articles: Article }) => {
       >
         Summerize This Article
       </Button>
-      {isPending ? (
-        <div className='flex items-center justify-center text-2xl'>
-          <FaSpinner className='animate-spin mr-2' />
-          <span>Loading...</span>
-        </div>
+      {summary.isPending ? (
+        <LoadingSpinner />
       ) : (
-        <Summary summary={summary} />
+        <Summary summary={summary.data} />
       )}
     </div>
   );
